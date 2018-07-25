@@ -13,7 +13,7 @@ def main(argv):
     return read_yaml(argv[1])
 
 def read_yaml(filename):
-    my_dict = yaml.load(open('example_job.yaml'))
+    my_dict = yaml.load(open(filename))
     return my_dict
 
 
