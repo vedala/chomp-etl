@@ -3,7 +3,12 @@ import yaml
 
 def main(argv):
     check_args(argv)
-    file_contents = get_file_contents(argv[1])
+
+    try:
+        file_contents = get_file_contents(argv[1])
+    except FileNotFoundError:
+        sys.exit(3)
+
     return yaml_str_to_dict(file_contents)
 
 def check_args(argv):
@@ -16,8 +21,13 @@ def check_args(argv):
         sys.exit(2)
 
 def get_file_contents(filename):
-    with open(filename) as f:
-        contents = f.read()
+    try:
+        with open(filename) as f:
+            contents = f.read()
+    except FileNotFoundError:
+        print(f'Error, file "{filename}" does not exist.', file=sys.stderr)
+        raise
+
     return contents
 
 def yaml_str_to_dict(yaml_str):
