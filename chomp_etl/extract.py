@@ -8,10 +8,10 @@ def main(argv):
 if __name__ == "__main__":
     num_args = len(sys.argv)
     if num_args < 2:
-        print("Too few arguments. One argument expected.")
+        print("Too few arguments. One argument expected.", file=sys.stderr)
         sys.exit(1)
     elif num_args > 2:
-        print("Too many arguments. Only one argument expected.")
+        print("Too many arguments. Only one argument expected.", file=sys.stderr)
         sys.exit(2)
 
     print(main(sys.argv[1]))
