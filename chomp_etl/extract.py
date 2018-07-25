@@ -2,12 +2,13 @@ import sys
 import yaml
 
 def main(argv):
-    check_args(argv)
+    if check_args(argv):
+        sys.exit(1)
 
     try:
         file_contents = get_file_contents(argv[1])
     except FileNotFoundError:
-        sys.exit(3)
+        sys.exit(2)
 
     return yaml_str_to_dict(file_contents)
 
@@ -15,10 +16,13 @@ def check_args(argv):
     num_args = len(argv)
     if num_args < 2:
         print("Too few arguments. One argument expected.", file=sys.stderr)
-        sys.exit(1)
+        return 1
     elif num_args > 2:
-        print("Too many arguments. Only one argument expected.", file=sys.stderr)
-        sys.exit(2)
+        print("Too many arguments. Only one argument expected.",
+                                                          file=sys.stderr)
+        return 1
+
+    return 0
 
 def get_file_contents(filename):
     try:
