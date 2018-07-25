@@ -39,4 +39,4 @@ def yaml_str_to_dict(yaml_str):
     return my_dict
 
 if __name__ == "__main__":
-    print(main(sys.argv))
+    main(sys.argv)
