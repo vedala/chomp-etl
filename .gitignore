@@ -2,5 +2,5 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.ini
-*.yaml
 *.json
+!chomp_etl/tests/*.json
