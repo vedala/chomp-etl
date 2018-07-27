@@ -1,5 +1,3 @@
-import sys
-import json
 import db_postgres
 
 def extract_data(config_dict):
