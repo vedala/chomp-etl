@@ -1,0 +1,23 @@
+{ "type_of_extract": "historical",
+  "extract_folder": "~/misc/extract_out",
+  "tables" : [
+      {
+      "name": "customers",
+      "connect_string": "host='localhost' dbname='db_one' user='chompuser1' password='secret'",
+      "columns":
+        [
+          {"column_name": "first_name"},
+          {"column_name": "last_name"},
+          {"column_name": "zip"}
+        ]
+      },
+      {
+      "name": "stores",
+      "connect_string": "host='localhost' dbname='db_one' user='chompuser1' password='secret'",
+      "columns": [
+          {"column_name": "city"},
+          {"column_name": "size_sqft"}
+        ]
+      }
+    ]
+}

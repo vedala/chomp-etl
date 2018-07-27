@@ -1,0 +1,4 @@
+host: localhost
+dbname: db_one
+user: chompuser1
+password: secret
