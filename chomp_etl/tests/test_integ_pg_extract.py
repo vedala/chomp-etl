@@ -1,6 +1,6 @@
 import unittest
 import os
-from extract import main, get_file_contents
+from chompetl import main, get_file_contents
 
 class IntegrationPostgresExtractTestCase(unittest.TestCase):
     """Tests for extracting from postgresql."""

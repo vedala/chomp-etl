@@ -1,7 +1,7 @@
 import unittest
 import yaml
 from db_postgres import fetch_and_write_data, construct_sql
-from extract import get_file_contents
+from chompetl import get_file_contents
 import os
 
 class DbPostgresTestCase(unittest.TestCase):

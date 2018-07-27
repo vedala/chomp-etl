@@ -1,6 +1,6 @@
 import unittest
 import os
-from extract import get_extract_config, check_args, get_file_contents
+from chompetl import get_extract_config, check_args, get_file_contents
 import json
 
 class ExtractTestCase(unittest.TestCase):
