@@ -24,7 +24,8 @@ class DbPostgresTestCase(unittest.TestCase):
             connect_string = connect_string + k + "='"
             connect_string = connect_string + v + "' "
         extract_location = "~/misc/extract_out"
-        fetch_and_write_data(table, columns, connect_string, extract_location)
+        fetch_rows = 10
+        fetch_and_write_data(table, columns, connect_string, extract_location, fetch_rows)
         expected_str = '1,"AAA"\n2,"BBB"\n'
         extract_file = os.path.join(os.path.expanduser(extract_location),
                                                           table + ".csv")
