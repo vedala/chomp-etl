@@ -7,7 +7,7 @@ class ExtractTestCase(unittest.TestCase):
     """Tests for `extract.py`."""
 
     def test_get_config_dict(self):
-        """Is yaml string correctly converted to dictionary?"""
+        """Is json string correctly converted to dictionary?"""
 
         json_str = '{"config_str": "somestring", "config_list": [ "item_1", "item_2"]}'
         expected_dictionary = {'config_list': ['item_1', 'item_2'],
