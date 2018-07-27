@@ -1,29 +1,26 @@
 import unittest
 import os
-from extract import yaml_str_to_dict, check_args, get_file_contents
+from extract import get_extract_config, check_args, get_file_contents
+import json
 
 class ExtractTestCase(unittest.TestCase):
     """Tests for `extract.py`."""
 
-    def test_yaml_str_to_dict(self):
+    def test_get_config_dict(self):
         """Is yaml string correctly converted to dictionary?"""
 
-        yaml_str = """
-        config_str: somestring
-        config_list:
-        - item_1
-        - item_2
-        """
+        json_str = '{"config_str": "somestring", "config_list": [ "item_1", "item_2"]}'
         expected_dictionary = {'config_list': ['item_1', 'item_2'],
                                          'config_str': 'somestring'}
-        my_dictionary = yaml_str_to_dict(yaml_str)
+        my_dictionary = get_extract_config(json_str)
         self.assertEqual(expected_dictionary, my_dictionary)
 
-    def test_yaml_str_to_dict_empty_input(self):
-        """Is empty string converted to None?"""
+    def test_json_str_to_dict_empty_input(self):
+        """Does empty json string raise exception?"""
 
-        yaml_str = ""
-        self.assertEqual(None, yaml_str_to_dict(yaml_str))
+        json_str = ""
+        with self.assertRaises(json.decoder.JSONDecodeError):
+            get_extract_config(json_str)
 
     def test_check_args_too_few_args(self):
         """Is returning non-zero value if too few arguments?"""

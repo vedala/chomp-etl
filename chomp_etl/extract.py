@@ -1,5 +1,5 @@
 import sys
-import yaml
+import json
 import db_postgres
 
 def main(argv):
@@ -11,8 +11,8 @@ def main(argv):
     except FileNotFoundError:
         sys.exit(2)
 
-    config_dict = yaml_str_to_dict(file_contents)
-    extract_data(config_dict)
+    extract_config_dict = get_extract_config(file_contents)
+    extract_data(extract_config_dict)
 
 def extract_data(config_dict):
     extract_location = config_dict['extract_folder']
@@ -52,8 +52,8 @@ def get_file_contents(filename):
 
     return contents
 
-def yaml_str_to_dict(yaml_str):
-    my_dict = yaml.load(yaml_str)
+def get_extract_config(config_file_contents):
+    my_dict = json.loads(config_file_contents)
     return my_dict
 
 if __name__ == "__main__":
