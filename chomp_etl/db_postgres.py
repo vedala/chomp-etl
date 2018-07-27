@@ -2,9 +2,12 @@ import psycopg2
 import os
 import csv
 
-def fetch_and_write_data(table, columns, connect_string, extract_location):
+DEFAULT_ROWS_TO_FETCH = 1024
+
+def fetch_and_write_data(table, columns, connect_string,
+                                        extract_location, fetch_rows):
     conn = psycopg2.connect(connect_string)
-    cursor = conn.cursor()
+    cursor = conn.cursor('a_cursor')
     sql_str = construct_sql(table, columns)
     cursor.execute(sql_str)
 
@@ -13,8 +16,13 @@ def fetch_and_write_data(table, columns, connect_string, extract_location):
     csv_writer = csv.writer(extract_file, quotechar='"',
                                     quoting=csv.QUOTE_NONNUMERIC)
 
-    for row in cursor:
-        write_row_to_file(extract_file, csv_writer, row)
+    num_fetch_rows = fetch_rows if fetch_rows else DEFAULT_ROWS_TO_FETCH
+    while True:
+        rows = cursor.fetchmany(num_fetch_rows)
+        if not len(rows):
+            break
+        for row in rows:
+            write_row_to_file(extract_file, csv_writer, row)
 
     extract_file.close()
 

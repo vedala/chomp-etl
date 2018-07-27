@@ -7,5 +7,9 @@ def extract_data(config_dict):
         table_name = table_dict['name']
         columns = table_dict['columns']
         connect_string = table_dict['connect_string']
+        if 'fetch_rows' in table_dict:
+            num_fetch_rows = table_dict['fetch_rows']
+        else:
+            num_fetch_rows = None
         db_postgres.fetch_and_write_data(table_name, columns,
-                                connect_string, extract_location)
+                            connect_string, extract_location, num_fetch_rows)
