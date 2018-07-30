@@ -21,11 +21,11 @@ class IntegrationSendgridExtractTestCase(unittest.TestCase):
         json_file = "job_1003.json"
 
         main(["", json_file])
-        expected_str_customers = '0,0,0\n3,1,1\n'
+        expected_str_stats = '0,0,0\n3,1,1\n'
         test_file_1 = "~/misc/extract_out/stats.csv"
-        self.assertEqual(expected_str_customers,
+        self.assertEqual(expected_str_stats,
                             get_file_contents(os.path.expanduser(test_file_1)))
-        # os.remove(os.path.expanduser(test_file_1))
+        os.remove(os.path.expanduser(test_file_1))
 
 if __name__ == "__main__":
     unittest.main()
