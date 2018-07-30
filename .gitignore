@@ -3,4 +3,4 @@ __pycache__/
 *$py.class
 *.ini
 *.json
-!chomp_etl/tests/*.json
+!chomp_etl/tests/job_100[12].json
