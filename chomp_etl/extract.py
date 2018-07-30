@@ -1,6 +1,17 @@
 import db_postgres
 
 def extract_data(config_dict):
+    extract_source = config_dict['extract_source']
+    if extract_source == 'postgres':
+        extract_postgres(config_dict)
+    elif extract_source == 'sendgrid':
+        extract_sendgrid(config_dict)
+
+
+def extract_sendgrid(config_dict):
+    pass
+
+def extract_postgres(config_dict):
     extract_location = config_dict['extract_folder']
     tables_list = config_dict['tables']
     for table_dict in tables_list:

@@ -1,5 +1,6 @@
 { "type_of_extract": "historical",
   "extract_folder": "~/misc/extract_out",
+  "extract_source": "postgres",
   "tables" : [
       {
       "name": "customers2",

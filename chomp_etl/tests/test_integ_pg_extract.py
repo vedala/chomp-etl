@@ -35,7 +35,8 @@ class IntegrationPostgresExtractTestCase(unittest.TestCase):
     def test_postgres_extract_job_1002(self):
         """Does extract from postgres create expected number of rows?"""
 
-        json_file = "job_1001.json"
+        json_file = "job_1002.json"
+        main(["", json_file])
         test_file_1 = "~/misc/extract_out/customers2.csv"
         test_file_2 = "~/misc/extract_out/stores2.csv"
         expected_customers_count = 30
