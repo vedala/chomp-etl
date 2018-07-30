@@ -1,4 +1,5 @@
 import db_postgres
+import api_sendgrid
 
 def extract_data(config_dict):
     extract_source = config_dict['extract_source']
@@ -9,7 +10,13 @@ def extract_data(config_dict):
 
 
 def extract_sendgrid(config_dict):
-    pass
+    extract_location = config_dict['extract_folder']
+    api_key = config_dict['api_key']
+    fields = config_dict['stats']['fields']
+    start_date = config_dict['stats']['start_date']
+    end_date = config_dict['stats']['end_date']
+    api_sendgrid.fetch_and_write_data('stats', api_key, fields, start_date,
+                                            end_date, extract_location)
 
 def extract_postgres(config_dict):
     extract_location = config_dict['extract_folder']

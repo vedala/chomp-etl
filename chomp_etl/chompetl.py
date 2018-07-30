@@ -42,10 +42,11 @@ def get_extract_config(config_file_contents):
     return my_dict
 
 def normalize_extract_dict(extract_config_dict):
-    tables_list = extract_config_dict['tables']
-    for table_dict in tables_list:
-        columns = get_column_list(table_dict['columns'])
-        table_dict['columns'] = columns
+    if extract_config_dict['extract_source'] == 'postgres':
+        tables_list = extract_config_dict['tables']
+        for table_dict in tables_list:
+            columns = get_column_list(table_dict['columns'])
+            table_dict['columns'] = columns
     return extract_config_dict
 
 def get_column_list(columns_json_list):
