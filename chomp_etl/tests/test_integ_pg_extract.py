@@ -1,5 +1,6 @@
 import unittest
 import os
+import sys
 from chompetl import main, get_file_contents
 
 class IntegrationPostgresExtractTestCase(unittest.TestCase):
@@ -19,8 +20,9 @@ class IntegrationPostgresExtractTestCase(unittest.TestCase):
         """Does extract from postgres create expected output files?"""
 
         json_file = "job_1001.json"
+        sys.argv[1:] = [json_file]
 
-        main(["", json_file])
+        main()
         expected_str_customers = '"John","Smith",30301\n"Kim","Hunter",30302\n'
         expected_str_stores = '"Atlanta",5000\n"Sandy Springs",8000\n'
         test_file_1 = "~/misc/extract_out/customers.csv"
@@ -36,7 +38,9 @@ class IntegrationPostgresExtractTestCase(unittest.TestCase):
         """Does extract from postgres create expected number of rows?"""
 
         json_file = "job_1002.json"
-        main(["", json_file])
+        sys.argv[1:] = [json_file]
+
+        main()
         test_file_1 = "~/misc/extract_out/customers2.csv"
         test_file_2 = "~/misc/extract_out/stores2.csv"
         expected_customers_count = 30

@@ -1,5 +1,6 @@
 import unittest
 import os
+import sys
 from chompetl import main, get_file_contents
 
 class IntegrationSendgridExtractTestCase(unittest.TestCase):
@@ -19,8 +20,9 @@ class IntegrationSendgridExtractTestCase(unittest.TestCase):
         """Does extract from sendgrid create expected output files?"""
 
         json_file = "job_1003.json"
+        sys.argv[1:] = [json_file]
 
-        main(["", json_file])
+        main()
         expected_str_stats = '0,0,0\n3,1,1\n'
         test_file_1 = "~/misc/extract_out/stats.csv"
         self.assertEqual(expected_str_stats,
