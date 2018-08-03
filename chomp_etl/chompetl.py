@@ -2,7 +2,8 @@ import sys
 import json
 import extract
 
-def main(argv):
+def main():
+    argv = sys.argv
     if check_args(argv):
         sys.exit(1)
 
@@ -54,6 +55,3 @@ def get_column_list(columns_json_list):
     for item in columns_json_list:
         column_list.append(item['column_name'])
     return column_list
-
-if __name__ == "__main__":
-    main(sys.argv)
