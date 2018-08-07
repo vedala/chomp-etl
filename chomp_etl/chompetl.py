@@ -9,12 +9,13 @@ def main():
 
     try:
         source_type = argv[1]
-        credentials = get_file_contents(argv[2])
+        credentials_json = get_file_contents(argv[2])
         source_config_json = get_file_contents(argv[3])
     except FileNotFoundError:
         sys.exit(2)
 
     source_config = json.loads(source_config_json)
+    credentials = json.loads(credentials_json)
     extract_location = argv[4]
     extract_filename = argv[5]
     extract.extract(source_type, credentials, source_config,
