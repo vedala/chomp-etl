@@ -19,38 +19,20 @@ class IntegrationPostgresExtractTestCase(unittest.TestCase):
     def test_postgres_extract(self):
         """Does extract from postgres create expected output files?"""
 
-        json_file = "job_1001.json"
-        sys.argv[1:] = [json_file]
+        source_type = "postgres"
+        credentials = "pg_credentials.json"
+        config_file = "job_1001.json"
+        extract_folder =  "~/misc/extract_out"
+        extract_filename = "job_1001_out"
+        sys.argv[1:] = [source_type, credentials, config_file,
+                                          extract_folder, extract_filename]
 
         main()
         expected_str_customers = '"John","Smith",30301\n"Kim","Hunter",30302\n'
-        expected_str_stores = '"Atlanta",5000\n"Sandy Springs",8000\n'
-        test_file_1 = "~/misc/extract_out/customers.csv"
-        test_file_2 = "~/misc/extract_out/stores.csv"
+        test_file_1 = "~/misc/extract_out/job_1001_out.csv"
         self.assertEqual(expected_str_customers,
                             get_file_contents(os.path.expanduser(test_file_1)))
-        self.assertEqual(expected_str_stores,
-                            get_file_contents(os.path.expanduser(test_file_2)))
         os.remove(os.path.expanduser(test_file_1))
-        os.remove(os.path.expanduser(test_file_2))
-
-    def test_postgres_extract_job_1002(self):
-        """Does extract from postgres create expected number of rows?"""
-
-        json_file = "job_1002.json"
-        sys.argv[1:] = [json_file]
-
-        main()
-        test_file_1 = "~/misc/extract_out/customers2.csv"
-        test_file_2 = "~/misc/extract_out/stores2.csv"
-        expected_customers_count = 30
-        expected_stores_count = 20
-        file_1_lines = self.count_lines(os.path.expanduser(test_file_1))
-        file_2_lines = self.count_lines(os.path.expanduser(test_file_2))
-        self.assertEqual(expected_customers_count, file_1_lines)
-        self.assertEqual(expected_stores_count, file_2_lines)
-        os.remove(os.path.expanduser(test_file_1))
-        os.remove(os.path.expanduser(test_file_2))
 
 if __name__ == "__main__":
     unittest.main()
