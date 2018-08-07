@@ -27,7 +27,7 @@ def check_args(argv):
         print("Incorrect number of arguments. Five arguments expected.",
                                                         file=sys.stderr)
         print(
-            f"Usage: {argv[0]} <source_type> <credentials_file> "
+            f"Usage: chomp_etl <source_type> <credentials_file> "
             " <source_config_file> <extract_location> <extract_filename>",
             file=sys.stderr)
         return 1
