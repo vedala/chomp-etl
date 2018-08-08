@@ -9,7 +9,7 @@ setuptools.setup(
     long_description="A command-line ETL program.",
     long_description_content_type="text/markdown",
     url="https://github.com/vedala/chomp-etl",
-    packages=setuptools.find_packages(),
+    packages=setuptools.find_packages(exclude=["tests"]),
     classifiers=(
         "Programming Language :: Python :: 3.6",
         "License :: OSI Approved :: MIT License",
