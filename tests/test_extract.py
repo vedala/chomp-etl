@@ -1,6 +1,6 @@
 import unittest
 import os
-from extract import construct_filename, write_batch
+from extract import construct_filename, write_batch, extract
 from chompetl import get_file_contents
 
 class ExtractTestCase(unittest.TestCase):
@@ -31,6 +31,11 @@ class ExtractTestCase(unittest.TestCase):
         file_contents = get_file_contents(file_with_path)
         expected_string = '1,"aaa",100\n2,"bbb",200\n'
         self.assertEqual(expected_string, file_contents)
+
+    def test_function_extract_invalid_source_type(self):
+        """Does it raise an exception when invalid source_type supplied?"""
+
+        self.assertRaises(Exception, extract, "no_such_source", "", "", "", "")
 
 if __name__ == "__main__":
     unittest.main()

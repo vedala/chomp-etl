@@ -6,6 +6,8 @@ def extract(source_type, credentials, source_config,
                                     extract_location, extract_filename):
     if source_type == 'postgres':
         source = SourcePostgres(credentials, source_config)
+    else:
+        raise Exception("Invalid source_type specified.")
 
     filename_with_path = construct_filename(extract_location, extract_filename)
     file_obj = open(filename_with_path, 'w+')
