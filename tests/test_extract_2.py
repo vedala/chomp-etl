@@ -32,7 +32,7 @@ class ExtractTestCase(unittest.TestCase):
 
     @patch.object(source_postgres.SourcePostgres, '__init__', lambda slf, cred, config: None)
     @patch.object(source_postgres.SourcePostgres, 'get_batch', mocked_get_batch)
-    @patch.object(source_postgres.SourcePostgres, 'cleanup', lambda slf: [])
+    @patch.object(source_postgres.SourcePostgres, 'cleanup', lambda slf: None)
     @patch('builtins.open', return_value=MockedClose())
     @patch('extract.construct_filename')
     @patch('extract.write_batch')
