@@ -33,15 +33,21 @@ class ExtractTestCase(unittest.TestCase):
             return empty_batch
 
     @patch.object(source_postgres.SourcePostgres,
-                                    '__init__', lambda slf, cred, config: None)
-    @patch.object(source_postgres.SourcePostgres,
                                     'get_batch', mocked_get_batch)
     @patch('builtins.open', return_value=MockedClose())
     @patch('extract.construct_filename', return_value=filename_constructed)
     @patch('extract.write_batch')
     @patch.object(source_postgres.SourcePostgres, 'cleanup')
-    def test_extract_function(self, mock_cleanup, mock_write_batch,
+    @patch.object(source_postgres.SourcePostgres, '__init__')
+    def test_extract_function(self, mock_init, mock_cleanup, mock_write_batch,
                                                 mock_construct_fn, mock_open):
+
+        #
+        # set mock_init's return_value to None, since this method is mocking
+        # a constructor and constructor is required to return None
+        #
+        mock_init.return_value = None
+
         source_type = "postgres"
         credentials = {'dbname': 'somedb', 'user':'someuser'}
         source_config = {'table': 'sometable', 'key2': 'somevalue'}
@@ -87,6 +93,11 @@ class ExtractTestCase(unittest.TestCase):
         # verify call to cleanup()
         #
         mock_cleanup.assert_called_once_with()
+
+        #
+        # verify class constructor called with expected arguments
+        #
+        mock_init.assert_called_once_with(credentials, source_config)
 
 if __name__ == "__main__":
     unittest.main()
