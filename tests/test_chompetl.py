@@ -1,8 +1,9 @@
 import unittest
+from unittest.mock import patch
 import os
 import io
 import sys
-from chompetl import get_file_contents, check_args
+from chompetl import get_file_contents, check_args, main
 
 class ChompetlTestCase(unittest.TestCase):
     """Tests for `extract.py`."""
@@ -59,6 +60,27 @@ class ChompetlTestCase(unittest.TestCase):
 
         retval = check_args([1, 2, 3, 4, 5, 6])
         self.assertEqual(0, retval)
+
+    def test_main_if_check_args(self):
+        """Does it exit with 1 if check_args fails?"""
+
+        sys.argv[1:] = [1, 2, 3, 4]
+        with self.assertRaises(SystemExit) as ctx:
+            main()
+        self.assertEqual(1, ctx.exception.code)
+
+    @patch('chompetl.get_file_contents', side_effect=FileNotFoundError)
+    @patch('chompetl.check_args', return_value=0)
+    def test_main_credential_file_missing(self,
+                                  mock_check_args, mock_get_file_contents):
+        """Does it exit with 2 if get_file_contents raises error?"""
+
+        sys.argv[1:] = ["", "a_file", "another_file"]
+        with self.assertRaises(SystemExit) as ctx:
+            main()
+        self.assertEqual(2, ctx.exception.code)
+        mock_check_args.assert_called_once()
+        mock_get_file_contents.assert_called_once()
 
 if __name__ == "__main__":
     unittest.main()
