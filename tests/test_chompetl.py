@@ -11,7 +11,13 @@ class ChompetlTestCase(unittest.TestCase):
         """Does it raise error when unable to open file?"""
 
         filename = "this_file_does_not_exist.txt"
+        printCapture = io.StringIO()
+        sys.stderr = printCapture
         self.assertRaises(FileNotFoundError, get_file_contents, filename)
+        sys.stderr = sys.__stderr__
+        self.assertEqual(
+            'Error, file "this_file_does_not_exist.txt" does not exist.\n',
+            printCapture.getvalue())
 
     def test_get_file_contents_valid_file(self):
         """Does it return file contents?"""
@@ -29,10 +35,24 @@ class ChompetlTestCase(unittest.TestCase):
     def test_check_args_incorrect_args(self):
         """Does it return 1 when incorrect num of arguments supplied?"""
 
+        expected_string = \
+            "Incorrect number of arguments. Five arguments expected.\n"   \
+            "Usage: chomp_etl <source_type> <credentials_file>  "         \
+            "<source_config_file> <extract_location> <extract_filename>\n"
+
+        printCapture = io.StringIO()
+        sys.stderr = printCapture
         retval = check_args([1, 2, 3, 4, 5])
         self.assertEqual(1, retval)
+        self.assertEqual(expected_string, printCapture.getvalue())
+        sys.stderr = sys.__stderr__
+
+        printCapture = io.StringIO()
+        sys.stderr = printCapture
         retval = check_args([1, 2, 3, 4, 5, 6, 7])
         self.assertEqual(1, retval)
+        self.assertEqual(expected_string, printCapture.getvalue())
+        sys.stderr = sys.__stderr__
 
     def test_check_args_correct_args(self):
         """Does it return 0 when correct num of arguments supplied?"""
