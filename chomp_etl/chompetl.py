@@ -14,8 +14,8 @@ def main():
     except FileNotFoundError:
         sys.exit(2)
 
-    source_config = json.loads(source_config_json)
     credentials = json.loads(credentials_json)
+    source_config = json.loads(source_config_json)
     extract_location = argv[4]
     extract_filename = argv[5]
     extract.extract(source_type, credentials, source_config,
