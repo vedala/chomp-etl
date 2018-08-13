@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, call
 import os
 import io
 import sys
@@ -81,6 +81,21 @@ class ChompetlTestCase(unittest.TestCase):
         self.assertEqual(2, ctx.exception.code)
         mock_check_args.assert_called_once()
         mock_get_file_contents.assert_called_once()
+
+    @patch('json.loads')
+    @patch('chompetl.check_args', return_value = 0)
+    @patch('extract.extract')
+    @patch('chompetl.get_file_contents')
+    def test_main_get_file_contents_calls(self, mock_get_file_contents,
+                              mock_extract, mock_check_args, mock_json_loads):
+        """Is get_file_contents called twice with different arg each time?"""
+
+        credentials_file = "a_file"
+        source_cfg_file  = "another_file"
+        sys.argv[1:] = ["", credentials_file, source_cfg_file, "", ""]
+        main()
+        calls = [call(credentials_file), call(source_cfg_file)]
+        mock_get_file_contents.assert_has_calls(calls)
 
 if __name__ == "__main__":
     unittest.main()
