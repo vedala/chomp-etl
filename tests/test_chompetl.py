@@ -114,5 +114,23 @@ class ChompetlTestCase(unittest.TestCase):
                                             call("second_call_return_string")]
         mock_json_loads.assert_has_calls(expected_calls)
 
+
+    @patch('chompetl.get_file_contents')
+    @patch('chompetl.check_args', return_value = 0)
+    @patch('extract.extract')
+    @patch('json.loads',
+        side_effect=["first_json_loads_string", "second_json_loads_string"])
+    def test_main_extract_call(self, mock_json_loads, mock_extract,
+                                    mock_check_args, mock_get_file_contents):
+        """Is extract called with expected arguments?"""
+
+        sys.argv[1:] = ["arg_1_val", "", "", "arg_4_val", "arg_5_val"]
+        main()
+        mock_extract.assert_called_once_with("arg_1_val",
+                                                "first_json_loads_string",
+                                                "second_json_loads_string",
+                                                "arg_4_val",
+                                                "arg_5_val")
+
 if __name__ == "__main__":
     unittest.main()
