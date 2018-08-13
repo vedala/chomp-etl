@@ -82,6 +82,7 @@ class ChompetlTestCase(unittest.TestCase):
         mock_check_args.assert_called_once()
         mock_get_file_contents.assert_called_once()
 
+
     @patch('json.loads')
     @patch('chompetl.check_args', return_value = 0)
     @patch('extract.extract')
@@ -94,8 +95,24 @@ class ChompetlTestCase(unittest.TestCase):
         source_cfg_file  = "another_file"
         sys.argv[1:] = ["", credentials_file, source_cfg_file, "", ""]
         main()
-        calls = [call(credentials_file), call(source_cfg_file)]
-        mock_get_file_contents.assert_has_calls(calls)
+        expected_calls = [call(credentials_file), call(source_cfg_file)]
+        mock_get_file_contents.assert_has_calls(expected_calls)
+
+
+    @patch('chompetl.get_file_contents',
+          side_effect=["first_call_return_string","second_call_return_string"])
+    @patch('chompetl.check_args', return_value = 0)
+    @patch('extract.extract')
+    @patch('json.loads')
+    def test_main_json_loads_calls(self, mock_json_loads, mock_extract,
+                                    mock_check_args, mock_get_file_contents):
+        """Is json_loads called twice with different arg each time?"""
+
+        sys.argv[1:] = ["", "", "", "", ""]
+        main()
+        expected_calls = [call("first_call_return_string"),
+                                            call("second_call_return_string")]
+        mock_json_loads.assert_has_calls(expected_calls)
 
 if __name__ == "__main__":
     unittest.main()
