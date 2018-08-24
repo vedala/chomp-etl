@@ -1,11 +1,14 @@
 import os
 import csv
 from source_postgres import SourcePostgres
+from source_sendgrid import SourceSendgrid
 
 def extract(source_type, credentials, source_config,
                                     extract_location, extract_filename):
     if source_type == 'postgres':
         source = SourcePostgres(credentials, source_config)
+    elif source_type == 'sendgrid':
+        source = SourceSendgrid(credentials, source_config)
     else:
         raise Exception("Invalid source_type specified.")
 
